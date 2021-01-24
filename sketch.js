@@ -7,6 +7,8 @@ const end_point = [9, 9];
 var flag_end = 0;
 var index_best_agent;
 var path;
+var interval;
+let div;
 this.maze_map =
   [
   [2, 2, 6, 12, 14, 12,10,6, 12, 10],
@@ -23,23 +25,31 @@ this.maze_map =
 
 
 function setup() {
+
   frameRate(10);
-  height = 700, width = 700;
-  num_agent = 2;
-  createCanvas(this.width, this.height);
+  height = 600, width = 600;
+  num_agent = 3;
+  let cnv = createCanvas(this.width, this.height);
+  div = createDiv("");
+
+  cnv.position((windowWidth / 2 - width / 2), (windowHeight / 2 - height / 2), 'fixed');
+  div.position((windowWidth / 2 - width / 2), (windowHeight / 2 - height / 2) - 50, 'fixed');
+  div.style('font-size', '40px');
   background(155)
   maze = new Maze(width, height, this.maze_map);
   Agent.where_agents_be = Array(maze_map.length).fill().map(() => Array(maze_map.length).fill(0));
 
-  setInterval(() => { agents.push(new Agent(start_point[0], start_point[1], maze)) }, 200);
- 
+  interval=setInterval(() => { agents.push(new Agent(start_point[0], start_point[1], maze)) }, 500);
+
+
 }
 
 function draw() {
 
   background(255/2)
   maze.draw();
-
+  if (agents.length >= num_agent)
+    clearInterval(interval);
   if (flag_end != 1) {
 
     for (var i = 0; i < agents.length; i++) {
@@ -56,9 +66,10 @@ function draw() {
   }
   else { 
     path = new Path(agents[index_best_agent].get_stack_way(),maze.get_Size_wall());
-    
+
     path.draw();
 
+    div.html("Found a short path: "+ (agents[index_best_agent].get_stack_way().length-1)+" moves")
     noLoop();
   }
  

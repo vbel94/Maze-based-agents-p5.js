@@ -3,6 +3,7 @@ class Maze {
 
         this.maze = maze
         this.size_wall = height / this.maze.length;
+        this.width =width;
 
     }
     get_Size_wall = function () { 
@@ -35,7 +36,7 @@ class Maze {
      draw = function () {
 
         fill(0, 0, 0)
-        strokeWeight(5)
+        strokeWeight(this.width/this.maze.length/20)
         for (var i = 0; i < this.maze.length ; i ++) {
             {
                 for (var j = 0; j < this.maze.length; j ++ ) {

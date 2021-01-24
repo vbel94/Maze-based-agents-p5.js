@@ -68,16 +68,16 @@ this.color=color(random (0,255),random(0,255),random (0,255))
     let max_score_index = this.give_score(where_i_can_move).indexOf(Math.max(...this.give_score(where_i_can_move)));
     switch (max_score_index) {
       case 0:
-        return 1; 
+        return 'up'; 
         break;
         case 1:
-        return 2;
+        return 'down';
         break;
         case 2:
-        return 4;
+        return 'right';
         break;
         case 3:
-        return 8;
+        return 'left';
         break;
     }
     
@@ -88,34 +88,37 @@ this.color=color(random (0,255),random(0,255),random (0,255))
   start_move_randomly = function () {
     var res = this.choose_way_to_go();
     Agent.where_agents_be[this.y][this.x]++;
+    
     switch (res) {
-      case 1:
+      case 'up':
         this.move_to_cord(this.x, this.y - 1, this.wall_size);
         this.y -= 1;
         break;
-      case 2:
+      case  'down':
         this.move_to_cord(this.x, this.y + 1, this.wall_size);
         this.y += 1;
         break;
-      case 4:
+      case 'right':
 
         this.move_to_cord(this.x + 1, this.y, this.wall_size);
         this.x += 1;
         break;
-      case 8:
+      case 'left':
         this.move_to_cord(this.x - 1, this.y, this.wall_size);
         this.x -= 1;
         break;
 
     }
-    if (JSON.stringify(this.stack_way[this.stack_way.length-2]) === JSON.stringify([this.x, this.y])) {
-      this.stack_way.pop();
+    if (JSON.stringify(this.stack_way[this.stack_way.length - 2]) === JSON.stringify([this.x, this.y])) {
+      
+      let bad_way = this.stack_way.pop();
+
 
     }
     else {
    
           this.stack_way.push([this.x, this.y])
-     
+         
         }
 
       }
